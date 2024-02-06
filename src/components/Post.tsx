@@ -1,3 +1,4 @@
+import { formatterDateDistance } from '@/utils/datefns';
 import { generateFakePost, generateFakeUser } from '@/utils/faker'
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
@@ -9,7 +10,7 @@ type FakeUser = {
 
 type FakePost = {
   content: string;
-  date: string;
+  date: Date;
 }
 
 export function Post() {
@@ -19,7 +20,7 @@ export function Post() {
   });
   const [post, setPost] = useState<FakePost>({
     content: '',
-    date: '',
+    date: new Date(),
   });
 
   useEffect(() => {
@@ -45,7 +46,7 @@ export function Post() {
             <p className='text-sm text-[#8D8D99] font-normal'>Dev</p>
           </div>
         </div>
-        <p>{post.date}</p>
+        <p>{formatterDateDistance(post.date)}</p>
       </div>
       
       <p className='max-w-[752px] text-[#C4C4CC] text-base mt-7'>

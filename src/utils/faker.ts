@@ -11,7 +11,7 @@ const generateFakeUser = () => {
 const generateFakePost = () => {
   return {
     content: faker.lorem.paragraph(),
-    date: `${faker.date.anytime()}`,
+    date: faker.date.past(),
   }
 }
 
