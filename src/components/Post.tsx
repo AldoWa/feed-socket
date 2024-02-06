@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 
 type PostProps = {
   children: React.ReactNode;
+  addComment: (message: string) => void;
 }
 
 type FakeUser = {
@@ -17,7 +18,7 @@ type FakePost = {
   date: Date;
 }
 
-export function Post({ children }: PostProps) {
+export function Post({ children, addComment }: PostProps) {
   const [user, setUser] = useState<FakeUser>({
     avatar: '',
     username: '',
@@ -26,6 +27,8 @@ export function Post({ children }: PostProps) {
     content: '',
     date: new Date(),
   });
+
+  const [message, setMessage] = useState('')
 
   const [loading, setLoading] = useState(true)
 
@@ -37,7 +40,8 @@ export function Post({ children }: PostProps) {
 
   function handleSubmitPost(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    console.log('Postando...')
+    addComment(message)
+    setMessage('')
   }
 
   if (loading) {
@@ -75,11 +79,14 @@ export function Post({ children }: PostProps) {
         <label htmlFor="comment">Deixe seu feedback</label>
         <textarea name="comment" id="comment" className='
         mt-4 min-h-24 rounded-lg border-[#00B37E] border
-        bg-[#121214] text-[#C4C4CC] text-base font-normal pr-4 py-2 pl-4'></textarea>
+        bg-[#121214] text-[#C4C4CC] text-base font-normal pr-4 py-2 pl-4'
+        value={message}
+        onChange={(event) => setMessage(event.target.value)}
+        ></textarea>
         <button type='submit' className='self-start bg-[#00875F] pr-6 pl-6 pt-4 pb-[12px] mt-4 rounded-lg font-bold text-base'>Publicar</button>
       </form>
 
-      <div className='flex flex-col gap-y-6 mt-8'>
+      <div className='flex flex-col gap-y-6 mt-8 max-h-96 overflow-auto'>
         {children}
       </div>
     </section>
