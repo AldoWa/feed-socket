@@ -3,6 +3,10 @@ import { generateFakePost, generateFakeUser } from '@/utils/faker'
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
+type PostProps = {
+  children: React.ReactNode;
+}
+
 type FakeUser = {
   username: string;
   avatar: string;
@@ -13,7 +17,7 @@ type FakePost = {
   date: Date;
 }
 
-export function Post() {
+export function Post({ children }: PostProps) {
   const [user, setUser] = useState<FakeUser>({
     avatar: '',
     username: '',
@@ -31,7 +35,10 @@ export function Post() {
     setLoading(false)
   }, [])
 
-
+  function handleSubmitPost(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    console.log('Postando...')
+  }
 
   if (loading) {
     return <PostSkeleton />
@@ -64,13 +71,17 @@ export function Post() {
 
       <div className='border mt-7 mb-6 border-[#323238]'></div>
 
-      <form action="" className='flex flex-col'>
+      <form onSubmit={handleSubmitPost} className='flex flex-col'>
         <label htmlFor="comment">Deixe seu feedback</label>
         <textarea name="comment" id="comment" className='
         mt-4 min-h-24 rounded-lg border-[#00B37E] border
         bg-[#121214] text-[#C4C4CC] text-base font-normal pr-4 py-2 pl-4'></textarea>
         <button type='submit' className='self-start bg-[#00875F] pr-6 pl-6 pt-4 pb-[12px] mt-4 rounded-lg font-bold text-base'>Publicar</button>
       </form>
+
+      <div className='flex flex-col gap-y-6 mt-8'>
+        {children}
+      </div>
     </section>
   );
 }

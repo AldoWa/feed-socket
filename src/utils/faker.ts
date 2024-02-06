@@ -15,4 +15,19 @@ const generateFakePost = () => {
   }
 }
 
-export { generateFakeUser, generateFakePost }
+const generateFakeComment = () => {
+  return {
+    id: faker.string.uuid(),
+    avatar: faker.image.avatar(),
+    username: faker.internet.userName(),
+    date: faker.date.past(),
+    message: faker.lorem.paragraph(),
+  }
+}
+
+const generateFakesComments = (length: number) => {
+  return Array.from({ length }, generateFakeComment)
+}
+
+
+export { generateFakeUser, generateFakePost, generateFakeComment, generateFakesComments }
