@@ -38,7 +38,7 @@ export function Post() {
   }
 
   return (
-    <section className='bg-[#323238] rounded-lg p-10 max-w-[832px]' >
+    <section className='bg-[#202024] rounded-lg p-10 max-w-[832px]' >
       <div className='flex items-center justify-between'>
         <div className='flex items-center'>
           <div className='mr-4 border-2 border-[#00B37E] p-[6px] rounded-lg'>
@@ -61,6 +61,16 @@ export function Post() {
       <p className='max-w-[752px] text-[#C4C4CC] text-base mt-7'>
         {post.content}
       </p>
+
+      <div className='border mt-7 mb-6 border-[#323238]'></div>
+
+      <form action="" className='flex flex-col'>
+        <label htmlFor="comment">Deixe seu feedback</label>
+        <textarea name="comment" id="comment" className='
+        mt-4 min-h-24 rounded-lg border-[#00B37E] border
+        bg-[#121214] text-[#C4C4CC] text-base font-normal pr-4 py-2 pl-4'></textarea>
+        <button type='submit' className='self-start bg-[#00875F] pr-6 pl-6 pt-4 pb-[12px] mt-4 rounded-lg font-bold text-base'>Publicar</button>
+      </form>
     </section>
   );
 }
@@ -68,7 +78,7 @@ export function Post() {
 function PostSkeleton() {
   const shimmer =
     'before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_2s_infinite] before:bg-gradient-to-r before:from-transparent before:via-white/60 before:to-transparent';
-  return (<section className={`${shimmer} relative overflow-hidden rounded-lg p-10 min-w-[832px] bg-[#323238] shadow-sm`}>
+  return (<section className={`${shimmer} relative overflow-hidden rounded-lg p-10 min-w-[832px] bg-[#202024] shadow-sm`}>
     <div className='flex items-center'>
       <div className='mr-4 border-2 border-[#00B37E] p-[6px] rounded-lg'>
         <div className='w-10 h-10 bg-gray-300 rounded-md'></div>
