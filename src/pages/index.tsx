@@ -1,39 +1,47 @@
 import { Comment } from "@/components/Comment";
 import { Post } from "@/components/Post";
+import { Comment as CommentType } from "@/types/comment";
+import { ClientEvents, ServerEvents } from "@/types/socket";
 import { formatterDateDistance } from "@/utils/datefns";
-import { generateFakesComments } from "@/utils/faker";
 import { faker } from "@faker-js/faker";
 import { Inter } from "next/font/google";
 import { useEffect, useState } from "react";
+import { Socket } from "socket.io";
+import { io } from "socket.io-client";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export type Comment = {
-  avatar: string;
-  username: string;
-  date: Date;
-  message: string;
-  id: string;
-}
-
 export default function Home() {
-  const [comments, setComments] = useState<Comment[]>([])
-
+  const [comments, setComments] = useState<CommentType[]>([])
+  const [socket, setSocket] = useState<Socket<ServerEvents, ClientEvents> | null>(null)
   useEffect(() => {
-    const comments = generateFakesComments(1)
-    setComments(comments)
+    startConnect()
+    return () => {
+      if(socket) {
+        socket.disconnect()
+      }
+    }
   }, [])
 
+  async function startConnect(){
+    await fetch('/api/socket')
+    // @ts-ignore
+    const socket: Socket<ServerEvents, ClientEvents> = io();
+    setSocket(socket)
+    socket.on('new_comment', (comment: CommentType) => {
+      setComments((comments) => [comment, ...comments])
+    })
+  }
+
   function addComment(message: string) {
-    const newComment: Comment = {
+    const newComment: CommentType = {
       avatar: faker.image.avatar(),
       date: new Date(),
       id: faker.string.uuid(),
       message,
       username: faker.internet.userName()
     }
-
-    setComments((comments) => [newComment, ...comments])
+    if(socket) socket.emit('new_comment', newComment)
   }
 
   return (
