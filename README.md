@@ -1,6 +1,6 @@
   <h1 align="center" id="title">Feed Socket</h1>
 
-<p id="description">Simple project to show the socket.io + nextjs working togheter</p>
+<p id="description">Simple project to show the socket.io + nextjs working together</p>
 
 <h2>Project Screenshots:</h2>
 
